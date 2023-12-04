@@ -1,0 +1,6 @@
+streamlit
+matplotlib
+seaborn
+pycountry
+plotly
+streamlit_dynamic_filters

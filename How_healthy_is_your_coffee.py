@@ -22,7 +22,11 @@ st.markdown(
 """
 )
 
-df = pd.read_excel('starbucks_data_cleaned.xlsx')
+@st.cache_data  # 
+def load_data(file):
+    df = pd.read_excel(file)
+    return df
+df = load_data('starbucks_data_cleaned.xlsx')
 df.rename(columns={'Product Name':'Beverage','Category':'Beverage Category'},inplace=True)
 df['Size']=df['Size'].apply(lambda x :'Short' if x=='1 - 236 mL serving' else x)
 size_op=['Short','Tall','Grande','Venti®']
