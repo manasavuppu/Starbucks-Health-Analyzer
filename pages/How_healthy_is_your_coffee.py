@@ -10,32 +10,32 @@ import datetime as dt
 import seaborn as sns
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
+st.set_page_config(layout='wide')
 st.write("Application")
-st.sidebar.success("Select a demo above.")
 st.markdown(
     """
 
 """
 )
-@st.cache_data  # 
+@st.cache_data  
 def load_data(file):
     df = pd.read_csv(file)
     return df
 df = load_data('starbucks_nutrition.csv')
-df.rename(columns={'Product Name':'Beverage','Category':'Beverage Category'},inplace=True)
-df['Size']=df['Size'].apply(lambda x :'Short' if x=='1 - 236 mL serving' else x)
-size_op=['Short','Tall','Grande','Venti®']
-df=df[df['Size'].isin(size_op)]
-df['Milk'] = df['Milk'].astype(str)
-df['hot_cold'] = df['Beverage'].apply(lambda x: 'cold' if any(keyword.lower() in x.lower() for keyword in ['iced', 'cold', 'cool', 'frappuccino®', 'smoothie']) else 'hot')
-df['hot_cold'] = df['Beverage'].apply(lambda x: 'cold' if any(keyword.lower() in x.lower() for keyword in ['iced', 'cold', 'cool', 'frappuccino®', 'smoothie']) else 'hot')
-df['hot_cold'] = df.apply(lambda row: 'cold' if row['Beverage Category'] == 'Smoothies' else row['hot_cold'], axis=1)
-condition = df['Beverage Category'].str.contains('Add On', case=False, na=False)
-df.loc[condition, ['Beverage Category', 'hot_cold']] = 'Add-on'
-df['Milk'] = df['Milk'].apply(lambda x: 'No Milk' if x=='nan' else x)
-df['Milk'] = df['Milk'].apply( lambda x: 'Whole' if x=='0.02' else x)
-df['Vegan'] = df['Milk'].apply(lambda x: 'Non Vegan' if any(keyword in x for keyword in ['0.02', 'Whole', 'Nonfat']) else 'Vegan')
-df = df[df['Beverage Category'] != 'Frappuccino Light Blended Coffee']
+# df.rename(columns={'Product Name':'Beverage','Category':'Beverage Category'},inplace=True)
+# df['Size']=df['Size'].apply(lambda x :'Short' if x=='1 - 236 mL serving' else x)
+# size_op=['Short','Tall','Grande','Venti®']
+# df=df[df['Size'].isin(size_op)]
+# df['Milk'] = df['Milk'].astype(str)
+# df['hot_cold'] = df['Beverage'].apply(lambda x: 'cold' if any(keyword.lower() in x.lower() for keyword in ['iced', 'cold', 'cool', 'frappuccino®', 'smoothie']) else 'hot')
+# df['hot_cold'] = df['Beverage'].apply(lambda x: 'cold' if any(keyword.lower() in x.lower() for keyword in ['iced', 'cold', 'cool', 'frappuccino®', 'smoothie']) else 'hot')
+# df['hot_cold'] = df.apply(lambda row: 'cold' if row['Beverage Category'] == 'Smoothies' else row['hot_cold'], axis=1)
+# condition = df['Beverage Category'].str.contains('Add On', case=False, na=False)
+# df.loc[condition, ['Beverage Category', 'hot_cold']] = 'Add-on'
+# df['Milk'] = df['Milk'].apply(lambda x: 'No Milk' if x=='nan' else x)
+# df['Milk'] = df['Milk'].apply( lambda x: 'Whole' if x=='0.02' else x)
+# df['Vegan'] = df['Milk'].apply(lambda x: 'Non Vegan' if any(keyword in x for keyword in ['0.02', 'Whole', 'Nonfat']) else 'Vegan')
+# df = df[df['Beverage Category'] != 'Frappuccino Light Blended Coffee']
 dv = df.copy(deep=True)
 dv['Calories'] = dv['Calories'] / 2000 * 100
 dv['Total Fat'] = dv['Total Fat (g)'] / 78 * 100
@@ -142,7 +142,6 @@ df_with_protein_fil['Caffeine(%DV)']=df_with_protein_fil['Caffeine'].round(2).as
 
 
         # Display the DataFrame with the added Nutri-Score column
-st.dataframe(dv)
 tab1, tab2 = st.tabs(["Beverage Category","Beverage"])
 with tab1:
     colors = ['#006241', '#b90000']
@@ -155,7 +154,7 @@ with tab1:
             alt.Tooltip('Sugar(%DV)', title='Sugar (%DV)'),
             alt.Tooltip('Caffeine(%DV)', title='Caffeine (%DV)')
         ]
-                ).properties(height=500,width=550).interactive()
+                ).properties(height=500,width=800).interactive()
 
         #Reference Line
     reference_line_x = alt.Chart(pd.DataFrame(([{'Caffeine': 30}]))).mark_rule(strokeDash=[3, 3], color='gray').encode(
@@ -176,8 +175,24 @@ with tab1:
     st.altair_chart(combined,use_container_width=True)
 
 
+    # def color_negative_red(value):
+    #         """
+    #         Colors elements in a dateframe
+    #         green if positive and red if
+    #         negative. Does not color NaN
+    #         values.
+    #         """
 
+    #         if value < 0:
+    #             color = 'red'
+    #         elif value > 0:
+    #             color = 'green'
+    #         else:
+    #             color = 'black'
 
+    #         return 'color: %s' % color
+        
+    #df_test=df.style.applymap(color_negative_red, subset=['Sugar','Caffeine'])
 
     df_with_protein_fil_recommended=df_with_protein_fil[df_with_protein_fil['Healthiness']=='Recommended']
     if st.button("Click Here for the List of Recommended beverages"):
@@ -185,22 +200,28 @@ with tab1:
                     st.success("We do not have any Recommendations catering to your Choices. However, Below are few healthier options you can choose from!")
                     
                     recommended_df = dv.query("Healthiness == 'Recommended'").sample(n=5)
-                    styled_df = recommended_df[['Beverage Category','Beverage','Milk','Size','Calories','Protein (g)','Sugar(%DV)','Caffeine(%DV)']]
+                    styled_df = recommended_df[['Beverage','Milk','Size']]
+                    styled_df['Beverage'] = styled_df['Beverage'].apply(lambda x: f'<span style="color:green">{x}</span>')
 
-                        # Display the styled table using st.dataframe
-                    st.dataframe(styled_df)
+
+                    st.write(styled_df.to_html(escape=False,index=False), unsafe_allow_html=True,hide_index=True)
                     
                 else:
                     
-                    st.success("Here are your recommendations!")
+                    st.success("Here are our recommendations!")
                 
 
             # Apply the color function to the relevant columns
                 
-                    styled_df = df_with_protein_fil_recommended[['Beverage Category','Beverage','Milk','Size','Calories','Protein (g)','Sugar(%DV)','Caffeine(%DV)']]
+                    styled_df = df_with_protein_fil_recommended[['Beverage','Milk','Size']].head(5)
+                    
 
                         # Display the styled table using st.dataframe
-                    st.dataframe(styled_df)
+                    styled_df['Beverage'] = styled_df['Beverage'].apply(lambda x: f'<span style="color:green">{x}</span>')
+
+
+                    st.write(styled_df.to_html(escape=False,index=False), unsafe_allow_html=True,hide_index=True)
+                    
 
 
     # Grouped bar chart
@@ -218,73 +239,98 @@ with tab1:
     # st.altair_chart(bars,use_container_width=True)
 
 with tab2:
-    bev_options=df_with_protein_fil['Beverage'].unique().tolist()
-    sel_bev=st.selectbox("Choose a Drink",bev_options)
-    df_bev_fil=df_with_protein_fil[df_with_protein_fil['Beverage'].isin([sel_bev])]
-    st.dataframe(df_bev_fil)
-    current_value = df_bev_fil['Nutri Score'].mean()
-    
+            bev_options=df_with_protein_fil['Beverage'].unique().tolist()
+            sel_bev=st.selectbox("Choose a Drink",bev_options)
+            df_bev_fil=df_with_protein_fil[df_with_protein_fil['Beverage'].isin([sel_bev])]
+            col1,col2, col3 = st.columns((4,0.25,2.5))
+            with col1:
+            
+                    
+                    current_value = df_bev_fil['Nutri Score'].mean()
+                    
 
 
-    plot_bgcolor = "#def"
-    quadrant_colors = [plot_bgcolor, "#b22b27" , "#e69138","#6aa84f"] 
-    quadrant_text = ["", "<b>UnHealthy</b>", "<b>Moderately Healthy</b>", "<b>healthy</b>"]
-    n_quadrants = len(quadrant_colors) - 1
+                    plot_bgcolor = "#def"
+                    quadrant_colors = [plot_bgcolor, "#b22b27" , "#e69138","#6aa84f"] 
+                    quadrant_text = ["", "<b>UnHealthy</b>", "<b>Moderately Healthy</b>", "<b>healthy</b>"]
+                    n_quadrants = len(quadrant_colors) - 1
 
-    current_value = df_bev_fil['Nutri Score'].mean()
-    min_value = 0
-    max_value = 50
-    hand_length = np.sqrt(2) / 4
-    hand_angle = np.pi * (1 - (max(min_value, min(max_value, current_value)) - min_value) / (max_value - min_value))
+                    current_value = df_bev_fil['Nutri Score'].mean()
+                    min_value = 0
+                    max_value = 50
+                    hand_length = np.sqrt(2) / 4
+                    hand_angle = np.pi * (1 - (max(min_value, min(max_value, current_value)) - min_value) / (max_value - min_value))
 
-    fig = go.Figure(
-        data=[
-            go.Pie(
-                values=[0.5] + (np.ones(n_quadrants) / 2 / n_quadrants).tolist(),
-                rotation=90,
-                hole=0.5,
-                marker_colors=quadrant_colors,
-                text=quadrant_text,
-                textinfo="text",
-                hoverinfo="skip",
-            ),
-        ],
-        layout=go.Layout(
-            showlegend=False,
-            margin=dict(b=0,t=10,l=10,r=10),
-            width=450,
-            height=450,
-            paper_bgcolor=plot_bgcolor,
-            annotations=[
-                go.layout.Annotation(
-                    text=f"<b>Nutri Score:</b><br>{current_value}",
-                    x=0.5, xanchor="center", xref="paper",
-                    y=0.25, yanchor="bottom", yref="paper",
-                    showarrow=False,
+                    fig = go.Figure(
+                        data=[
+                            go.Pie(
+                                values=[0.5] + (np.ones(n_quadrants) / 2 / n_quadrants).tolist(),
+                                rotation=90,
+                                hole=0.5,
+                                marker_colors=quadrant_colors,
+                                text=quadrant_text,
+                                textinfo="text",
+                                hoverinfo="skip",
+                            ),
+                        ],
+                        layout=go.Layout(
+                            showlegend=False,
+                            margin=dict(b=0,t=10,l=10,r=10),
+                            width=500,
+                            height=500,
+                            paper_bgcolor=plot_bgcolor,
+                            annotations=[
+                                go.layout.Annotation(
+                                    text=f"<b>Nutri Score:</b><br>{round(current_value,2)}",
+                                    x=0.5, xanchor="center", xref="paper",
+                                    y=0.25, yanchor="bottom", yref="paper",
+                                    showarrow=False,
+                                )
+                            ],
+                            shapes=[
+                                go.layout.Shape(
+                                    type="circle",
+                                    x0=0.48, x1=0.52,
+                                    y0=0.48, y1=0.52,
+                                    fillcolor="#333",
+                                    line_color="#333",
+                                ),
+                                go.layout.Shape(
+                                    type="line",
+                                    x0=0.5, x1=0.5 + hand_length * np.cos(hand_angle),
+                                    y0=0.5, y1=0.5 + hand_length * np.sin(hand_angle),
+                                    line=dict(color="#333", width=4)
+                                )
+                            ]
+                        )
+                    )
+                    st.plotly_chart(fig,use_container_width=True)
+
+            with col3:
+
+                    df_long = pd.melt(df_bev_fil[['Beverage','Sugar','Caffeine']], id_vars=['Beverage'], var_name='Nutrient', value_name='Score')
+                    
+                    df_long['Score']=df_long['Score'].round(2)
+                    df_long['Score_perc']=df_long['Score'].astype(str)+'%'
+                    
+                    
+                    bars1= alt.Chart(df_long).mark_bar().encode(
+                            y=alt.Y('Score:Q', scale=alt.Scale(domain=(0, 100)), title='%Daily Value'),
+                            x='Nutrient:N',
+                            color=alt.Color('Score:Q', scale=alt.Scale(scheme='browns'),legend=None),
+                            tooltip=[
+                                alt.Tooltip('Score' ,title='%Daily Value:')
+                            ]
+                            #column='Beverage Category:N'
+                                    ).properties(height=500,width=150)
+                    text = alt.Chart(df_long).mark_text(dy=-5, dx=3, color='black').encode(
+                    y=alt.Y('Score:Q'),
+                    x=alt.X('Nutrient:N'),
+                    text=alt.Text('Score_perc:N')
                 )
-            ],
-            shapes=[
-                go.layout.Shape(
-                    type="circle",
-                    x0=0.48, x1=0.52,
-                    y0=0.48, y1=0.52,
-                    fillcolor="#333",
-                    line_color="#333",
-                ),
-                go.layout.Shape(
-                    type="line",
-                    x0=0.5, x1=0.5 + hand_length * np.cos(hand_angle),
-                    y0=0.5, y1=0.5 + hand_length * np.sin(hand_angle),
-                    line=dict(color="#333", width=4)
-                )
-            ]
-        )
-    )
-    st.plotly_chart(fig)
-
-    
-    
-  
 
 
-  
+                    st.altair_chart(bars1+text,use_container_width=True)
+
+
+        
