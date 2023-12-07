@@ -12,7 +12,7 @@ import seaborn as sns
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
 
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 
 st.write("Application")
 
