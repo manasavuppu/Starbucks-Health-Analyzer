@@ -10,7 +10,6 @@ import datetime as dt
 import seaborn as sns
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
-
 st.write("Application")
 st.sidebar.success("Select a demo above.")
 st.markdown(
@@ -18,8 +17,6 @@ st.markdown(
 
 """
 )
-
-
 @st.cache_data  # 
 def load_data(file):
     df = pd.read_csv(file)
