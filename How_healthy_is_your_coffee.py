@@ -11,12 +11,8 @@ import datetime as dt
 import seaborn as sns
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
-
-
 st.write("Application")
-
 st.sidebar.success("Select a demo above.")
-
 st.markdown(
     """
 
@@ -69,7 +65,6 @@ def determine_healthiness(row):
         return 'Not Recommended'
     else:
         return 'Recommended'
-
 # Apply the function to create the 'Healthiness' column
 dv['Healthiness'] = dv.apply(determine_healthiness, axis=1)
 def calculate_nutri_score(row):
@@ -90,12 +85,9 @@ def calculate_nutri_score(row):
         # Example Usage with a DataFrame
         # Assume dv is your DataFrame with columns like 'energy', 'sugars', 'saturated_fat', 'sodium', 'proteins', 'caffeine', etc.
 dv["Nutri Score"] = dv.apply(calculate_nutri_score, axis=1)
-
-
 bev_cat_options=['All Categories']
 bev_cat_options +=dv['Beverage Category'].unique().tolist()
 sel_bev_cat=st.sidebar.selectbox("Choose a category to analyze",bev_cat_options,placeholder='All Categories')
-
 if sel_bev_cat=='All Categories':
     sel_bev_cat=dv['Beverage Category'].unique().tolist()
     df_bev_cat_fil = dv[dv['Beverage Category'].isin(sel_bev_cat)]
