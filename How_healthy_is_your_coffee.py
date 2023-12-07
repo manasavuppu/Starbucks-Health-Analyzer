@@ -11,7 +11,6 @@ import datetime as dt
 import seaborn as sns
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
-import openpyxl
 
 st.write("Application")
 st.sidebar.success("Select a demo above.")
