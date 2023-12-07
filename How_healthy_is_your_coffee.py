@@ -5,7 +5,6 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import altair as alt
-import openpyxl as openpyxl
 import pydeck as pdk
 import datetime as dt
 import seaborn as sns
