@@ -4,7 +4,6 @@ import pandas as pd
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import altair as alt
 import pycountry
 import pydeck as pdk
@@ -12,8 +11,7 @@ import datetime as dt
 import seaborn as sns
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
-import dash
-import dash_daq as daq
+
 st.set_page_config(layout="wide")
 
 st.write("Application")
