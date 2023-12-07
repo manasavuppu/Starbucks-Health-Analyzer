@@ -10,7 +10,7 @@ import datetime as dt
 import seaborn as sns
 from streamlit_dynamic_filters import DynamicFilters
 import plotly.graph_objects as go
-import openpyxl
+
 st.write("Application")
 st.sidebar.success("Select a demo above.")
 st.markdown(
@@ -22,9 +22,9 @@ st.markdown(
 
 @st.cache_data  # 
 def load_data(file):
-    df = pd.read_excel(file)
+    df = pd.read_csv(file)
     return df
-df = load_data('starbucks_data_cleaned.xlsx')
+df = load_data('starbucks_nutrition.csv')
 df.rename(columns={'Product Name':'Beverage','Category':'Beverage Category'},inplace=True)
 df['Size']=df['Size'].apply(lambda x :'Short' if x=='1 - 236 mL serving' else x)
 size_op=['Short','Tall','Grande','Venti®']
