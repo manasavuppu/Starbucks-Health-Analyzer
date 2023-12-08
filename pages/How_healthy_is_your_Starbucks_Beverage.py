@@ -229,7 +229,15 @@ with tab2:
                 ]
             )
         )
+        
         st.plotly_chart(fig, use_container_width=True)
+        st.markdown(
+        """
+                   **Nutri Score Range:** Balanced Option:<=17,
+                                      Moderate Indulgences: 18-34
+                                      Unbalanced Delights: >=35
+             """)
+    
 
     with col3:
         # Altair bar chart creation
