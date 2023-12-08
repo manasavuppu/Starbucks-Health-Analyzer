@@ -8,7 +8,7 @@ import datetime as dt
 import seaborn as sns
 import plotly.graph_objects as go
 st.set_page_config(layout='wide')
-image = 'Images/starbucks_logo1.png'
+image = 'Images/starbucks_logo.png'
 st.image(image, width=80)
 
 # Cache data for faster data Retreival
