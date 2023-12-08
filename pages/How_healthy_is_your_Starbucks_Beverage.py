@@ -85,10 +85,8 @@ select_protien = st.sidebar.slider(
     "Select a range for Protien(g)", min_value=0, max_value=40, value=(0, 20))
 df_with_protein_fil = df_no_duplicates[(df_no_duplicates['Protein (g)'] >= select_protien[0]) & (
     df_no_duplicates['Protein (g)'] <= select_protien[1])]
-df_with_protein_fil['Sugar(%DV)'] = df_with_protein_fil['Sugar'].round(
-    2).astype(str)+'%'
-df_with_protein_fil['Caffeine(%DV)'] = df_with_protein_fil['Caffeine'].round(
-    2).astype(str)+'%'
+df_with_protein_fil['Sugar(%DV)'] = df_with_protein_fil['Sugar'].round(2).astype(str)+'%'
+df_with_protein_fil['Caffeine(%DV)'] = df_with_protein_fil['Caffeine'].round(2).astype(str)+'%'
 
 
 # Tab Creation
