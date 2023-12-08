@@ -8,6 +8,14 @@ import pydeck as pdk
 import plotly.express as px
 import time
 st.set_page_config(layout="wide")
+# Cache data for faster Data Retrieval
+@st.cache_data(show_spinner="Loading")
+def load_data(file):
+    df_map = pd.read_csv(file)
+    return df_map
+
+df_map = load_data('Data/directory.csv')
+df_nutri = load_data('Data/avg_nutri.csv')
 col1, col2 = st.columns((0.3, 2))
 with col1:
     image = 'Images/starbucks_logo.png'
@@ -15,6 +23,7 @@ with col1:
 with col2:
     st.write("# Sip Smart: Healthy Choices at Starbucks.")
     st.write("Explore the nutritional landscape of your Starbucks drinks—uncover insights and make informed choices for a healthier sip.")
+
 tab1, tab2, tab3 = st.tabs(["Introduction", "Background", "About the App"])
 
 with tab1:
@@ -25,14 +34,9 @@ with tab1:
     )
 
 
-# Cache data for faster Data Retrieval
 
-    @st.cache_data
-    def load_data(file):
-        df_map = pd.read_csv(file)
-        return df_map
-    df_map = load_data('Data/directory.csv')
-    df_nutri = load_data('Data/avg_nutri.csv')
+
+
     df_map_cleaned = df_map.dropna(subset=['Latitude', 'Longitude'])
 
     df_country_bar = df_map_cleaned.groupby(
@@ -87,8 +91,7 @@ with tab1:
 
     col1, col2 = st.columns((2, 2))
     with col1:
-        with st.spinner('Wait for it...'):
-            time.sleep(3)
+      
         # Map creation
         st.pydeck_chart(pdk.Deck(
             map_style=None,
