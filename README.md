@@ -1,5 +1,5 @@
 # Starbucks Beverage Nutritional Assessment: Discovering smart choices.
-This application will help analyze your favorite beverages based on sugar and caffeine content represented as %DV  enabling users to select a beverage category and set protein ranges for tailored analysis.
+This application will help analyze your favorite beverages based on sugar and caffeine content represented as %Daily value enabling users to select a beverage category and set protein ranges for tailored analysis.
 Uncover the NutriScore of your favourite starbucks beverage and easily categorize its healthiness through the intuitive Categorization Meter. 
 Visualize the healthiness of your beverage at a glance. 
 All the data used for the project is available in Data folder.
