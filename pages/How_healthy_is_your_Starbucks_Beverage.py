@@ -49,8 +49,8 @@ dv['Healthiness'] = dv.apply(determine_healthiness, axis=1)
 def calculate_nutri_score(row):
     # Nutritional factors and their weights
     factors = {
-        "Sugar": {"weight": 0.55, "base": 0.0},
-        "Caffeine": {"weight": 0.5, "base": 0.0},  # Custom weight for caffeine
+        "Sugar": {"weight": 1, "base": 0.0},
+        "Caffeine": {"weight": 1, "base": 0.0},  # Custom weight for caffeine
     }
 
     # Calculate scores for each factor

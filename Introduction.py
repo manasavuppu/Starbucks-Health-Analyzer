@@ -9,19 +9,20 @@ import plotly.express as px
 import time
 st.set_page_config(layout="wide")
 # Cache data for faster Data Retrieval
-@st.cache_data(show_spinner="Loading")
+@st.cache_data(show_spinner="Loading..")
 def load_data(file):
     df_map = pd.read_csv(file)
     return df_map
 
+
+df_nutri = pd.read_csv('Data/avg_nutri.csv')
 df_map = load_data('Data/directory.csv')
-df_nutri = load_data('Data/avg_nutri.csv')
 col1, col2 = st.columns((0.3, 2))
 with col1:
     image = 'Images/starbucks_logo.png'
     st.image(image, width=100)
 with col2:
-    st.write("# Sip Smart: Healthy Choices at Starbucks.")
+    st.write("# Sip Smart: Analyze Beverage Choices at Starbucks.")
     st.write("Explore the nutritional landscape of your Starbucks drinks—uncover insights and make informed choices for a healthier sip.")
 
 tab1, tab2, tab3 = st.tabs(["Introduction", "Background", "About the App"])
@@ -29,7 +30,7 @@ tab1, tab2, tab3 = st.tabs(["Introduction", "Background", "About the App"])
 with tab1:
     st.markdown(
         """
-           As **Starbucks**, a global coffee powerhouse, expands its footprint across the globe, understanding the nutritional landscape of its offerings becomes increasingly crucial. Particularly in the **United States**, where Starbucks holds significant market dominance, this app allows you to explore and compare nutritional information, empowering you to make informed choices.
+           As **Starbucks** expands its footprint across the globe, understanding the nutritional landscape of its offerings becomes increasingly crucial. Particularly in the **United States**, where Starbucks holds significant market dominance, this app allows you to explore and compare nutritional information, empowering you to make informed choices.
             """
     )
 
@@ -48,17 +49,15 @@ with tab1:
     df_country_bar_sorted['CountryName'] = df_country_bar_sorted['CountryName'].replace(
         'Korea, Republic of', 'South Korea')
     st.markdown(
-        """**Add your Favourite countries to see the count of Starbucks stores**""")
-    Country_list = df_country_bar_sorted['CountryName'].unique().tolist()
-    Country_list_top5 = df_country_bar_sorted['CountryName'].head(
-        5).tolist()  # Top 5 countries with high store count
+        """**Select your Favourite countries to see the number of Starbucks stores**""")
+    Country_list = sorted(df_country_bar_sorted['CountryName'].unique().tolist())
+    Country_list_top5 = df_country_bar_sorted['CountryName'].head(5).tolist()  # Top 5 countries with high store count
     # Country select box creation
     options = st.multiselect(
         'Choose your countries from the drop down', Country_list, default=Country_list_top5
     )
 
-    df_country_bar_sorted_filtered = df_country_bar_sorted[df_country_bar_sorted['CountryName'].isin(
-        options)]
+    df_country_bar_sorted_filtered = df_country_bar_sorted[df_country_bar_sorted['CountryName'].isin(options)]
     max_count = df_country_bar_sorted_filtered['Count'].max()
     st.markdown(
         """Zoom out and explore the global concentration of Starbucks stores."""
@@ -81,7 +80,7 @@ with tab1:
         baseline='middle',
         dx=12,
 
-        color='Black'  # Text color
+        color='green'  # Text color
     ).encode(
         text='Count:Q'
     )
