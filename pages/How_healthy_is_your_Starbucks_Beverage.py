@@ -173,12 +173,12 @@ with tab2:
         plot_bgcolor = "#def"
         quadrant_colors = [plot_bgcolor, "#b22b27", "#e69138", "#006241"]
         quadrant_text = ["", "<b>Unbalanced Delights</b>",
-                         "<b>Moderated Indulgences</b>", "<b>Balanced Option</b>"]
+                         "<b>Moderate Indulgences</b>", "<b>Balanced Option</b>"]
         n_quadrants = len(quadrant_colors) - 1
 
         current_value = df_bev_fil['Nutri Score'].mean()
         min_value = 0
-        max_value = 50
+        max_value = 100
         hand_length = np.sqrt(2) / 4
         hand_angle = np.pi * \
             (1 - (max(min_value, min(max_value, current_value)) -
@@ -205,7 +205,7 @@ with tab2:
                 paper_bgcolor=plot_bgcolor,
                 annotations=[
                     go.layout.Annotation(
-                        text=f"<b>Nutri Score:</b><br>{round(current_value,2)}",
+                        text=f"<b>Healthiness Score:</b><br>{round(current_value,2)}",
                         x=0.5, xanchor="center", xref="paper",
                         y=0.25, yanchor="bottom", yref="paper",
                         showarrow=False,
@@ -233,12 +233,12 @@ with tab2:
         st.plotly_chart(fig, use_container_width=True)
         st.markdown(
         """
-                   **Nutri Score Range:** Balanced Option:<=17,
-                                      Moderate Indulgences: 18-34
-                                      Unbalanced Delights: >=35
+                   **Healthiness Score Range:** Balanced Option:<=33,
+                                      Moderate Indulgences: 34-65
+                                      Unbalanced Delights: >=66
              """)
     
-
+        st.write("Go to 'About the app' tab to learn about Healthiness Score")
     with col3:
         # Altair bar chart creation
         df_avg = df_bev_fil.groupby(['Beverage'])[

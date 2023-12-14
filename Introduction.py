@@ -150,8 +150,9 @@ with tab2:
     st.markdown("""Sugar and caffeine emerge as prominent contributors to the %Daily Value with **Sugar at 68.64%** and **Caffeine reaching 20%**.""")
 
 with tab3:
-    st.markdown("""This app methodically compares Starbucks drinks, assessing Sugar and Caffeine content, and considering Percentage Daily Value. Users can select beverage categories and protein ranges, finding a balance between indulgence and nutrition. Drinks are categorized as **Balanced Brews** and **'Over-indulgent** choices.""")
-    st.markdown("""Dive deeper into individual beverages with the app's insightful feature. Uncover the **Nutri Score** based on Sugar and Caffeine, allowing you to categorize healthiness effortlessly with an interactive **categorization meter**.""")
+    Nutri_score = "https://en.wikipedia.org/wiki/Nutri-Score"
+    st.markdown("""This app methodically compares Starbucks drinks, assessing Sugar and Caffeine content, and considering Percentage Daily Value. Users can select beverage categories and protein ranges, finding a balance between indulgence and nutrition. Drinks are categorized as **Balanced Brews** and **Over-indulgent** choices.""")
+    st.markdown("""Dive deeper into individual beverages with the app's insightful feature **Healthiness Score**. This feature is inspired by [Nutri_score](%s) but focused primarily on Sugar and Caffeine content, allowing you to categorize healthiness effortlessly with an interactive **categorization meter**.""" % Nutri_score)
 
     st.subheader("Data Sources:")
     BNV = '[Starbucks Nutritional content](https://stories.starbucks.com/uploads/2019/01/nutrition-1.pdf)'
