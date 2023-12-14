@@ -3,7 +3,7 @@ This application will help analyze your starbucks beverages based on sugar and c
 
 **Key Features**
 
-   a. Sugar vs. Caffeine Analysis (%DV): Compare and analyze the percentage of Daily Value (%DV) for sugar and caffeine content in your different beverage categories.
+   a. Sugar vs. Caffeine Analysis (%DV): Compare and analyze the percentage of Daily Value (%DV) for sugar and caffeine content in different beverage categories.
    
    b. Beverage Healthiness: Explore a visual representation of the Healthiness Score through an intuitive categorization meter. This feature provides an easy-to-understand assessment of the nutritional value of your selected drinks.
 
