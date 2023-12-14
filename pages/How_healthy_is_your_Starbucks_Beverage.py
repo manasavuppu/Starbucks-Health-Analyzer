@@ -165,105 +165,108 @@ with tab2:
         "Choose a Starbucks Beverage from the Selected Category ", bev_options)
     df_bev_fil = df_with_protein_fil[df_with_protein_fil['Beverage'].isin([
                                                                           sel_bev])]
-    col1, col2, col3 = st.columns((4, 0.25, 2.5))
-    with col1:
-        # Nutriscore meter creation
-        current_value = df_bev_fil['Nutri Score'].mean()
+    if df_bev_fil.empty:
+        st.warning("There are no beverages available to choose from based on your selection. Consider changing the beverage category or Protien Range")
+    else:
+        col1, col2, col3 = st.columns((4, 0.25, 2.5))
+        with col1:
+            # Nutriscore meter creation
+            current_value = df_bev_fil['Nutri Score'].mean()
 
-        plot_bgcolor = "#def"
-        quadrant_colors = [plot_bgcolor, "#b22b27", "#e69138", "#006241"]
-        quadrant_text = ["", "<b>Unbalanced Delights</b>",
-                         "<b>Moderate Indulgences</b>", "<b>Balanced Option</b>"]
-        n_quadrants = len(quadrant_colors) - 1
+            plot_bgcolor = "#def"
+            quadrant_colors = [plot_bgcolor, "#b22b27", "#e69138", "#006241"]
+            quadrant_text = ["", "<b>Unbalanced Delights</b>",
+                            "<b>Moderate Indulgences</b>", "<b>Balanced Option</b>"]
+            n_quadrants = len(quadrant_colors) - 1
 
-        current_value = df_bev_fil['Nutri Score'].mean()
-        min_value = 0
-        max_value = 100
-        hand_length = np.sqrt(2) / 4
-        hand_angle = np.pi * \
-            (1 - (max(min_value, min(max_value, current_value)) -
-             min_value) / (max_value - min_value))
+            current_value = df_bev_fil['Nutri Score'].mean()
+            min_value = 0
+            max_value = 100
+            hand_length = np.sqrt(2) / 4
+            hand_angle = np.pi * \
+                (1 - (max(min_value, min(max_value, current_value)) -
+                min_value) / (max_value - min_value))
 
-        fig = go.Figure(
-            data=[
-                go.Pie(
-                    values=[0.5] + (np.ones(n_quadrants) /
-                                    2 / n_quadrants).tolist(),
-                    rotation=90,
-                    hole=0.5,
-                    marker_colors=quadrant_colors,
-                    text=quadrant_text,
-                    textinfo="text",
-                    hoverinfo="skip",
-                ),
-            ],
-            layout=go.Layout(
-                showlegend=False,
-                margin=dict(b=0, t=10, l=10, r=10),
-                width=500,
-                height=500,
-                paper_bgcolor=plot_bgcolor,
-                annotations=[
-                    go.layout.Annotation(
-                        text=f"<b>Healthiness Score:</b><br>{round(current_value,2)}",
-                        x=0.5, xanchor="center", xref="paper",
-                        y=0.25, yanchor="bottom", yref="paper",
-                        showarrow=False,
-                        font=dict(color="black", size=16)
-                    )
-                ],
-                shapes=[
-                    go.layout.Shape(
-                        type="circle",
-                        x0=0.48, x1=0.52,
-                        y0=0.48, y1=0.52,
-                        fillcolor="#333",
-                        line_color="#333",
+            fig = go.Figure(
+                data=[
+                    go.Pie(
+                        values=[0.5] + (np.ones(n_quadrants) /
+                                        2 / n_quadrants).tolist(),
+                        rotation=90,
+                        hole=0.5,
+                        marker_colors=quadrant_colors,
+                        text=quadrant_text,
+                        textinfo="text",
+                        hoverinfo="skip",
                     ),
-                    go.layout.Shape(
-                        type="line",
-                        x0=0.5, x1=0.5 + hand_length * np.cos(hand_angle),
-                        y0=0.5, y1=0.5 + hand_length * np.sin(hand_angle),
-                        line=dict(color="#333", width=4)
-                    )
-                ]
+                ],
+                layout=go.Layout(
+                    showlegend=False,
+                    margin=dict(b=0, t=10, l=10, r=10),
+                    width=500,
+                    height=500,
+                    paper_bgcolor=plot_bgcolor,
+                    annotations=[
+                        go.layout.Annotation(
+                            text=f"<b>Healthiness Score:</b><br>{round(current_value,2)}",
+                            x=0.5, xanchor="center", xref="paper",
+                            y=0.25, yanchor="bottom", yref="paper",
+                            showarrow=False,
+                            font=dict(color="black", size=16)
+                        )
+                    ],
+                    shapes=[
+                        go.layout.Shape(
+                            type="circle",
+                            x0=0.48, x1=0.52,
+                            y0=0.48, y1=0.52,
+                            fillcolor="#333",
+                            line_color="#333",
+                        ),
+                        go.layout.Shape(
+                            type="line",
+                            x0=0.5, x1=0.5 + hand_length * np.cos(hand_angle),
+                            y0=0.5, y1=0.5 + hand_length * np.sin(hand_angle),
+                            line=dict(color="#333", width=4)
+                        )
+                    ]
+                )
             )
-        )
+            
+            st.plotly_chart(fig, use_container_width=True)
+            st.markdown(
+            """
+                    **Healthiness Score Range:** Balanced Option:<=33,
+                                        Moderate Indulgences: 34-65
+                                        Unbalanced Delights: >=66
+                """)
         
-        st.plotly_chart(fig, use_container_width=True)
-        st.markdown(
-        """
-                   **Healthiness Score Range:** Balanced Option:<=33,
-                                      Moderate Indulgences: 34-65
-                                      Unbalanced Delights: >=66
-             """)
-    
-        st.write("Go to 'About the app' tab to learn about Healthiness Score")
-    with col3:
-        # Altair bar chart creation
-        df_avg = df_bev_fil.groupby(['Beverage'])[
-            ['Sugar', 'Caffeine']].mean().reset_index()
-        df_long = pd.melt(df_avg[['Beverage', 'Sugar', 'Caffeine']], id_vars=[
-                          'Beverage'], var_name='Nutrient', value_name='Score')
+            st.write("Go to 'About the app' tab to learn about Healthiness Score")
+        with col3:
+            # Altair bar chart creation
+            df_avg = df_bev_fil.groupby(['Beverage'])[
+                ['Sugar', 'Caffeine']].mean().reset_index()
+            df_long = pd.melt(df_avg[['Beverage', 'Sugar', 'Caffeine']], id_vars=[
+                            'Beverage'], var_name='Nutrient', value_name='Score')
 
-        df_long['Score'] = df_long['Score'].round(2)
-        df_long['Score_perc'] = df_long['Score'].astype(str)+'%'
+            df_long['Score'] = df_long['Score'].round(2)
+            df_long['Score_perc'] = df_long['Score'].astype(str)+'%'
 
-        bars1 = alt.Chart(df_long).mark_bar().encode(
-            y=alt.Y('Score:Q', scale=alt.Scale(
-                domain=(0, 100)), title='%Daily Value'),
-            x='Nutrient:N',
-            color=alt.Color('Score:Q', scale=alt.Scale(
-                scheme='browns'), legend=None),
-            tooltip=[
-                alt.Tooltip('Score', title='%Daily Value:')
-            ]
-        ).properties(height=500, width=150)
-        text = alt.Chart(df_long).mark_text(dy=-5, dx=3, color='black').encode(
-            y=alt.Y('Score:Q'),
-            x=alt.X('Nutrient:N'),
-            text=alt.Text('Score_perc:N')
+            bars1 = alt.Chart(df_long).mark_bar().encode(
+                y=alt.Y('Score:Q', scale=alt.Scale(
+                    domain=(0, 100)), title='%Daily Value'),
+                x='Nutrient:N',
+                color=alt.Color('Score:Q', scale=alt.Scale(
+                    scheme='browns'), legend=None),
+                tooltip=[
+                    alt.Tooltip('Score', title='%Daily Value:')
+                ]
+            ).properties(height=500, width=150)
+            text = alt.Chart(df_long).mark_text(dy=-5, dx=3, color='black').encode(
+                y=alt.Y('Score:Q'),
+                x=alt.X('Nutrient:N'),
+                text=alt.Text('Score_perc:N')
 
-        )
+            )
 
-        st.altair_chart(bars1+text, use_container_width=True)
+            st.altair_chart(bars1+text, use_container_width=True)
