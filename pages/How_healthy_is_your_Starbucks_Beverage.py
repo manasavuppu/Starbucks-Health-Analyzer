@@ -90,7 +90,7 @@ df_with_protein_fil['Caffeine(%DV)'] = df_with_protein_fil['Caffeine'].round(2).
 
 
 # Tab Creation
-tab1, tab2 = st.tabs(["Beverage Category", "Beverages"])
+tab1, tab2 = st.tabs(["Sugar vs Caffeine", "Beverage Healthiness"])
 with tab1:
     st.markdown(
         """

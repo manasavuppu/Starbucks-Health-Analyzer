@@ -134,9 +134,12 @@ with tab2:
 
 with tab3:
     Nutri_score = "https://en.wikipedia.org/wiki/Nutri-Score"
-    st.markdown("""This app methodically compares Starbucks drinks, assessing Sugar and Caffeine content, and considering Percentage Daily Value. Users can select beverage categories and protein ranges, finding a balance between indulgence and nutrition. Drinks are categorized as **Balanced Brews** and **Over-indulgent** choices.""")
-    st.markdown("""Dive deeper into individual beverages with the app's insightful feature **Healthiness Score**. This feature is inspired by [Nutri_score](%s) but focused primarily on Sugar and Caffeine content, allowing you to categorize healthiness effortlessly with an interactive **categorization meter**.""" % Nutri_score)
-
+    st.markdown("""This app compares different Starbucks beverages, assessing Sugar and Caffeine content, and considering Percentage Daily Value to provide insights on how healthy are they.""")
+    st.markdown("""**Sugar Vs Caffeine**: Compare Sugar vs Caffeine (%DV) in this section, enabling users to choose beverage categories and protein ranges providing insights into where various beverages align. Categorizations include  **Balanced Brews** and **Over-indulgent** choices for a comprehensive understanding of drink profiles.""")
+    st.markdown("""**Healthiness Score**: Dive deeper into individual beverages with the app's insightful feature **Healthiness Score**. This feature is inspired by [Nutri_score](%s) but focused primarily on Sugar and Caffeine content, allowing you to categorize healthiness effortlessly with an interactive **categorization meter**.""" % Nutri_score)
+    st.markdown("""Healthiness Score Range: Balanced Option:<=33,
+                                      Moderate Indulgences: 34-65
+                                      Unbalanced Delights: >=66""")
     st.subheader("Data Sources:")
     BNV = '[Starbucks Nutritional content](https://stories.starbucks.com/uploads/2019/01/nutrition-1.pdf)'
     SSC = '[Starbucks Stores](https://data.world/data-hut/starbucks-location-dataset)'
