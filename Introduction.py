@@ -15,8 +15,9 @@ def load_data(file):
     return df_map
 
 
-df_nutri = pd.read_csv('Data/avg_nutri.csv')
+
 df_map = load_data('Data/directory.csv')
+df_nutri = pd.read_csv('Data/avg_nutri.csv')
 col1, col2 = st.columns((0.3, 2))
 with col1:
     image = 'Images/starbucks_logo.png'
