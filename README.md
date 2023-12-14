@@ -19,7 +19,7 @@ There are two ways by which you can view the app
 
     a. Clone the repository by executing:
        ```
-       git clone https://github.com/geethika992/Starbucks-Nutrition-Analysis.git
+       git clone https://github.com/geethika992/Starbucks-Health-Analyzer.git
        ```
 
     b. Run the following command to ensure all the necessary packages are installed:
