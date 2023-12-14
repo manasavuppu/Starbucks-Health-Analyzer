@@ -16,7 +16,7 @@ All the data used for the project is given below:
 
 There are two ways by which you can view the app
 
- 1. Streamlit Cloud: [**Click here**](https://starbucksbeveragehealth.streamlit.app/) to view the working streamlit app. 
+ 1. Streamlit Cloud: [**Click here**](https://starbucksbeveragehealthiness.streamlit.app/) to view the working streamlit app. 
  
  2. Running the App locally: 
 
