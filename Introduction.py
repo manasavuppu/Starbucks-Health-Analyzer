@@ -49,6 +49,7 @@ with tab1:
         lambda code: pycountry.countries.get(alpha_2=code).name)
     df_country_bar_sorted['CountryName'] = df_country_bar_sorted['CountryName'].replace(
         'Korea, Republic of', 'South Korea')
+
     st.markdown(
         """**Select your Favourite countries to see the number of Starbucks stores**""")
     Country_list = sorted(df_country_bar_sorted['CountryName'].unique().tolist())
@@ -61,7 +62,7 @@ with tab1:
     df_country_bar_sorted_filtered = df_country_bar_sorted[df_country_bar_sorted['CountryName'].isin(options)]
     max_count = df_country_bar_sorted_filtered['Count'].max()
     st.markdown(
-        """Zoom out and explore the global concentration of Starbucks stores."""
+        """Zoom in and explore the global concentration of Starbucks stores."""
     )
    # Bar chart for store density analysis
     chart = alt.Chart(df_country_bar_sorted_filtered).mark_bar(color='#006241').encode(
@@ -91,29 +92,10 @@ with tab1:
 
     col1, col2 = st.columns((2, 2))
     with col1:
-      
-        # Map creation
-        st.pydeck_chart(pdk.Deck(
-            map_style=None,
-            initial_view_state=pdk.ViewState(
-                latitude=31.76,
-                longitude=-97.4,
-                zoom=3,
-                pitch=0,
-
-            ),
-            layers=[
-
-                pdk.Layer(
-                    'ScatterplotLayer',
-                    data=df_map_cleaned,
-                    get_position='[Longitude, Latitude]',
-                    get_radius=10000,
-                    get_fill_color=[0, 98, 65],
-                    get_line_color=[0, 0, 0],
-                ),
-            ]
-        ))
+         #Map creation
+   
+        st.map(data=df_map_cleaned,latitude='Latitude',longitude='Longitude',color='#006241',use_container_width=True)
+       
 
     with col2:
         if df_country_bar_sorted_filtered.empty:
