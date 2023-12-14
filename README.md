@@ -1,6 +1,6 @@
 # Starbucks Beverage Nutritional Assessment: Discovering smart choices.
-This application will help analyze your favorite beverages based on sugar and caffeine content represented as %Daily value. 
-Visualize the healthiness of your beverage at a glance. 
+This application will help analyze your starbucks beverages based on sugar and caffeine content represented as %Daily value. 
+Enables user understand where the bevrages fall in a Sugar vs Caffeine space. Also, Visualize the healthiness of your beverage at a glance. 
 All the data used for the project is given below:
 1. [Starbucks Nutritional content](https://stories.starbucks.com/uploads/2019/01/nutrition-1.pdf)
 2. [Starbucks Stores](https://data.world/data-hut/starbucks-location-dataset)
