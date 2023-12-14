@@ -11,8 +11,10 @@ This app comprises two main pages:
 *Introduction*: Users can find information on the purpose behind creating this app, background details, and an overview of the app itself.
 
 *How Healthy is your Beverage*: This section empowers users with interactive features. The functionalities available on this page include:
-Sugar vs. Caffeine Analysis (%DV): Compare and analyze the percentage of Daily Value (%DV) for sugar and caffeine content in your chosen beverages.
-Beverage Healthiness: Explore a visual representation of the Healthiness Score through an intuitive categorization meter. This feature provides an easy-to-understand assessment of the nutritional value of your selected drinks.
+   
+   a. Sugar vs. Caffeine Analysis (%DV): Compare and analyze the percentage of Daily Value (%DV) for sugar and caffeine content in your chosen beverages.
+   
+   b. Beverage Healthiness: Explore a visual representation of the Healthiness Score through an intuitive categorization meter. This feature provides an easy-to-understand assessment of the nutritional value of your selected drinks.
 
 # How to View the App
 
