@@ -4,7 +4,15 @@ Enables user understand where the bevrages fall in a Sugar vs Caffeine space. Al
 All the data used for the project is given below:
 1. [Starbucks Nutritional content](https://stories.starbucks.com/uploads/2019/01/nutrition-1.pdf)
 2. [Starbucks Stores](https://data.world/data-hut/starbucks-location-dataset)
+   
+**Key Features**
+This app comprises two main pages:
 
+*Introduction*: Users can find information on the purpose behind creating this app, background details, and an overview of the app itself.
+
+*How Healthy is your Beverage*: This section empowers users with interactive features. The functionalities available on this page include:
+Sugar vs. Caffeine Analysis (%DV): Compare and analyze the percentage of Daily Value (%DV) for sugar and caffeine content in your chosen beverages.
+Beverage Healthiness: Explore a visual representation of the Healthiness Score through an intuitive categorization meter. This feature provides an easy-to-understand assessment of the nutritional value of your selected drinks.
 
 # How to View the App
 
@@ -29,17 +37,6 @@ There are two ways by which you can view the app
        streamlit run Introduction.py
        ```
 
-# Key Features
-This app comprises two main pages:
-
-**Introduction**: Here, users can find information about Starbucks, the purpose behind creating this app, background details, and an overview of the app itself.
-
-**How Healthy is your Beverage**: This section empowers users with interactive features. The functionalities available on this page include:
-
-   Sugar vs. Caffeine Analysis (%DV): Compare and analyze the percentage of Daily Value (%DV) for sugar and caffeine content in your chosen beverages.
-Healthiness Score Visualization:
-
-  Beverage Healthiness: Explore a visual representation of the Healthiness Score through an intuitive categorization meter. This feature provides an easy-to-understand assessment of the nutritional value of your selected drinks.
   
 # Future Scope
 This app can be expanded to add user profiles for personalization and tailored recommendations.
