@@ -121,7 +121,7 @@ with tab2:
     ).properties(height=alt.Step(70), width=alt.Step(80))
 
     # Text labels
-    text = alt.Chart(df_nutri).mark_text(align='center', baseline='middle', dy=-5).encode(
+    text = alt.Chart(df_nutri).mark_text(align='center', baseline='middle', dy=-5,color='#008001').encode(
         x=alt.X('Metric:N', title='Nutrient'),
         y=alt.Y('Value:Q', title='%Daily Value'),
         text=alt.Text('perc_values:N'),
