@@ -153,7 +153,7 @@ with tab1:
 
     st.markdown(
         """
-                    Would you like to know if your favourite Beverage is a healthy option? **Go to Beverages tab.**
+                    Would you like to know if your favourite Beverage is a healthy option? **Go to Beverage Healthiness tab.**
              """
     )
 
